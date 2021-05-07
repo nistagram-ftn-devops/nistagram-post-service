@@ -1,4 +1,5 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Comment } from "./comment.entity"
 
 @Entity()
 export class Post extends BaseEntity {
@@ -14,4 +15,7 @@ export class Post extends BaseEntity {
 
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     createdAt: Date
+
+    @OneToMany(type => Comment, comment => comment.post, { eager: true , cascade: ['insert', 'update']})
+    comments?: Comment[]
 }
