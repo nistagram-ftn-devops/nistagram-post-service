@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial } from 'typeorm';
-import { Comment } from './comment.entity';
-import { CommentRepository } from './comment.repository';
+import { PostComment } from '../post-comment/post-comment.entity';
+import { PostCommentService } from '../post-comment/post-comment.service';
 import { Post } from './post.entity';
 import { PostRepository } from './post.repository';
 
@@ -11,9 +11,7 @@ export class PostService {
     constructor(
         @InjectRepository(PostRepository) 
         private postRepository: PostRepository,
-
-        @InjectRepository(CommentRepository)
-        private commentRepository: CommentRepository
+        private commentSerivce: PostCommentService
     ) {}
 
     async findAll(): Promise<Post[]> {
@@ -30,17 +28,18 @@ export class PostService {
         const post = new Post()
         post.authorId = payload.authorId
         post.description = payload.description
+        post.imageId = payload.imageId
         return this.postRepository.save(post)
     }
 
-    async createComment(id: number, payload: DeepPartial<Comment>): Promise<Post> {
+    async createComment(id: number, payload: DeepPartial<PostComment>): Promise<Post> {
         const post = await this.findById(id)
 
-        const comment = new Comment()
+        const comment = new PostComment()
         comment.authorId = payload.authorId
         comment.text = payload.text
         
-        const savedComment = await this.commentRepository.save(comment)
+        const savedComment = await this.commentSerivce.save(comment)
         post.comments.push(savedComment)
         
         return this.postRepository.save(post)
