@@ -1,5 +1,5 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
-import { Comment } from "./comment.entity"
+import { PostComment } from "../post-comment/post-comment.entity"
 
 @Entity()
 export class Post extends BaseEntity {
@@ -13,9 +13,12 @@ export class Post extends BaseEntity {
     @Column()
     authorId!: number
 
+    @Column()
+    imageId!: number
+
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     createdAt: Date
 
-    @OneToMany(type => Comment, comment => comment.post, { eager: true , cascade: ['insert', 'update']})
-    comments?: Comment[]
+    @OneToMany(type => PostComment, comment => comment.post, { eager: true , cascade: ['insert', 'update']})
+    comments?: PostComment[]
 }

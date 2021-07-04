@@ -7,6 +7,6 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
     username: 'root',
     password: 'root',
     database: 'NistagramPostServiceDb',
-    entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+    entities: [__dirname + '/../modules/**/*.entity{.ts,.js}'],
     synchronize: true,
 }
