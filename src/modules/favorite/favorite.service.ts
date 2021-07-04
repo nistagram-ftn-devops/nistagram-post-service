@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial } from 'typeorm';
 import { Post } from '../post/post.entity';
@@ -8,6 +8,12 @@ import { FavoriteRepository } from './favorite.repository';
 @Injectable()
 export class FavoriteService {
     constructor(@InjectRepository(FavoriteRepository) private favoriteRepository: FavoriteRepository) {}
+
+    async findById(id: number) {
+        const found = await this.favoriteRepository.findOne({ id })
+        if (!found) throw new NotFoundException('favorite-not-found')
+        return found
+    }
 
     async findByPostIdAndUserId(postId: number, userId: number) {
         return await this.favoriteRepository.createQueryBuilder('favorite')
@@ -29,6 +35,6 @@ export class FavoriteService {
     }
 
     delete(favorite: Favorite) {
-
+        this.favoriteRepository.delete(favorite)
     }
 }

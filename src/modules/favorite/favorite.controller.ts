@@ -15,7 +15,8 @@ export class FavoriteController {
     }
 
     @Delete()
-    removeFromFavorites(@Body() payload: Favorite) {
-
+    async removeFromFavorites(@Body() payload: Favorite) {
+        const favorite = await this.favoriteService.findById(payload.id)
+        this.favoriteService.delete(favorite)
     }
 }
