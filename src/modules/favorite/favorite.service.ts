@@ -25,7 +25,6 @@ export class FavoriteService {
 
     async add(post: Post, payload: DeepPartial<Favorite>) {
         const f = await this.findByPostIdAndUserId(post.id, payload.userId)
-        console.log(f)
         if (f) throw new BadRequestException('already-saved')
 
         return this.favoriteRepository.save({
