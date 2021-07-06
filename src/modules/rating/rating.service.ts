@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial } from 'typeorm';
 import { Post } from '../post/post.entity';
@@ -37,7 +37,9 @@ export class RatingService {
         })
     }
 
-    remove(rateId: number) {
-
+    async remove(post: Post, userId: number) {
+        const rating = await this.findByPostIdAndUserId(post.id, userId)
+        if (!rating) throw new NotFoundException('rating-not-found')
+        this.ratingRepository.delete(rating)
     }
 }

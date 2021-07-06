@@ -25,8 +25,10 @@ export class RatingController {
         return this.ratingService.create(post, payload)
     }
 
-    @Delete(':id')
-    remove(@Param('id') id: string) {
-
+    @Delete(':postId')
+    async remove(@Param('postId') postId: string) {
+        const post = await this.postService.findById(+postId)
+        const userId = 1 // TODO: change this when auth gets imeplemnted
+        this.ratingService.remove(post, userId)
     }
 }
