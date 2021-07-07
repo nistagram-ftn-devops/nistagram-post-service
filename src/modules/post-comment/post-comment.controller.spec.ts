@@ -12,7 +12,7 @@ describe('PostCommentController', () => {
     controller = module.get<PostCommentController>(PostCommentController);
   });
 
-  // it('should be defined', () => {
-  //   expect(controller).toBeDefined();
-  // });
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
 });

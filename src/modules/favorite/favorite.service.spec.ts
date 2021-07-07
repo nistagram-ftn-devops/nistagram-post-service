@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { FavoriteRepository } from './favorite.repository';
 import { FavoriteService } from './favorite.service';
 
 describe('FavoriteService', () => {
@@ -6,13 +7,13 @@ describe('FavoriteService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [FavoriteService],
+      providers: [FavoriteService, FavoriteRepository],
     }).compile();
 
     service = module.get<FavoriteService>(FavoriteService);
   });
 
-  // it('should be defined', () => {
-  //   expect(service).toBeDefined();
-  // });
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
 });
