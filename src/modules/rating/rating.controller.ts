@@ -5,7 +5,7 @@ import { Rating } from './rating.entity';
 import { RatingService } from './rating.service';
 import { RatingType } from './rating.types';
 
-@Controller('rating')
+@Controller('post/rating')
 export class RatingController {
     constructor(private ratingService: RatingService, private postService: PostService) {}
 
