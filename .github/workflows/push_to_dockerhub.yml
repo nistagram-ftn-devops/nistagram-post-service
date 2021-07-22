@@ -8,6 +8,8 @@ jobs:
     name: Build and push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
+      - name: Check out GitHub repo
+        uses: actions/checkout@v2
       - name: Build and test app ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
@@ -20,8 +22,6 @@ jobs:
         run: echo "RELEASE_VERSION=${GITHUB_REF:11}" >> $GITHUB_ENV
       - name: Test environment variable
         run: echo ${{ env.RELEASE_VERSION }}
-      - name: Check out GitHub repo
-        uses: actions/checkout@v2
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
