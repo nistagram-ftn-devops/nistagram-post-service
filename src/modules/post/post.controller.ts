@@ -3,7 +3,7 @@ import { Post as PostEntity } from './post.entity';
 import { PostService } from './post.service';
 import { CreateCommentDto, CreatePostDto } from './post.types';
 
-@Controller('post/post')
+@Controller('api/post/post')
 export class PostController {
     constructor(private postService: PostService) {}
 
