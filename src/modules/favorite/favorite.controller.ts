@@ -4,7 +4,7 @@ import { PostService } from '../post/post.service';
 import { Favorite } from './favorite.entity';
 import { FavoriteService } from './favorite.service';
 
-@Controller('post/favorite')
+@Controller('api/post/favorite')
 export class FavoriteController {
     constructor(private favoriteService: FavoriteService, private postService: PostService) {}
 
