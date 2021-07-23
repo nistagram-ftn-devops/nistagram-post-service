@@ -24,6 +24,10 @@ export class PostService {
         return post
     }
 
+    async findByUserId(id: number): Promise<Post[]> {
+        return this.postRepository.find({ authorId: id })
+    }
+
     async create(payload: DeepPartial<Post>): Promise<Post> {
         const post = new Post()
         post.authorId = payload.authorId
