@@ -17,6 +17,11 @@ export class PostController {
         return this.postService.findById(id)
     }
 
+    @Get('/user/:id')
+    findByUserid(@Param('id') id: number): Promise<PostEntity[]> {
+        return this.postService.findByUserId(id)
+    }
+
     @Post()
     create(@Body() args: CreatePostDto): Promise<PostEntity> {
         return this.postService.create(args)
