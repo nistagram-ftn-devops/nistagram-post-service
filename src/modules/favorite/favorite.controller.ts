@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
 import { DeepPartial } from 'typeorm';
 import { PostService } from '../post/post.service';
 import { Favorite } from './favorite.entity';
@@ -14,9 +14,9 @@ export class FavoriteController {
         return this.favoriteService.add(post, payload)
     }
 
-    @Delete()
-    async removeFromFavorites(@Body() payload: Favorite) {
-        const favorite = await this.favoriteService.findById(payload.id)
+    @Delete(':id')
+    async removeFromFavorites(@Param('id') id: string) {
+        const favorite = await this.favoriteService.findById(+id)
         this.favoriteService.delete(favorite)
     }
 }
