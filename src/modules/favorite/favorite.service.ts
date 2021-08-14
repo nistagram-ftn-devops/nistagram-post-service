@@ -15,6 +15,13 @@ export class FavoriteService {
         return found
     }
 
+    async getFavoritesForUser(userId: number) {
+        return await this.favoriteRepository.createQueryBuilder('favorite')
+            .leftJoinAndSelect('favorite.post', 'post')
+            .where('userId = :userId', { userId })
+            .getMany()
+    }
+
     async findByPostIdAndUserId(postId: number, userId: number) {
         return await this.favoriteRepository.createQueryBuilder('favorite')
             .leftJoinAndSelect('favorite.post', 'post')
