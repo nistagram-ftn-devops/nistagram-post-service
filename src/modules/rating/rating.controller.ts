@@ -25,10 +25,10 @@ export class RatingController {
         return this.ratingService.create(post, payload)
     }
 
-    @Delete(':postId')
-    async remove(@Param('postId') postId: string) {
-        const post = await this.postService.findById(+postId)
-        const userId = 1 // TODO: change this when auth gets imeplemnted
+    @Delete()
+    async remove(@Body() payload: DeepPartial<Rating>) {
+        const post = await this.postService.findById(payload.id)
+        const userId = payload.userId
         this.ratingService.remove(post, userId)
     }
 }
