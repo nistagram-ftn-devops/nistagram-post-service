@@ -27,7 +27,7 @@ export class RatingController {
 
     @Delete()
     async remove(@Body() payload: DeepPartial<Rating>) {
-        const post = await this.postService.findById(payload.id)
+        const post = await this.postService.findById(payload.post.id)
         const userId = payload.userId
         this.ratingService.remove(post, userId)
     }
