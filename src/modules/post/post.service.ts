@@ -33,6 +33,8 @@ export class PostService {
         post.authorId = payload.authorId
         post.description = payload.description
         post.imageId = payload.imageId
+        post.authorUsername = payload.authorUsername
+        post.isPublic = payload.isPublic
         return this.postRepository.save(post)
     }
 
@@ -47,5 +49,17 @@ export class PostService {
         post.comments.push(savedComment)
         
         return this.postRepository.save(post)
+    }
+
+    async search(keyword: string): Promise<Post[]> {
+        const result = await this.postRepository
+            .createQueryBuilder('post')
+            .orWhere('authorUsername LIKE :keyword', { keyword: `%${keyword}%` })
+            .orWhere('description LIKE :keyword', { keyword: `%${keyword}%` })
+            .getMany()
+
+        console.log('result', result)
+
+        return result.filter(r => r.isPublic)
     }
 }
