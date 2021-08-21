@@ -31,4 +31,9 @@ export class PostController {
     createComment(@Param('id') id: number, @Body() args: CreateCommentDto): Promise<PostEntity> {
         return this.postService.createComment(id, args)
     }
+
+    @Get('search/:keyword')
+    searchPosts(@Param('keyword') keyword: string): Promise<PostEntity[]> {
+        return this.postService.search(keyword)
+    }
 }
