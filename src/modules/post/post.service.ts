@@ -62,4 +62,13 @@ export class PostService {
 
         return result.filter(r => r.isPublic)
     }
+
+    async getPostsForUser(userIds: string[]): Promise<Post[]> {
+        const result = await this.postRepository
+            .createQueryBuilder('post')
+            .where('authorId IN (:...userIds)', { userIds })
+            .getMany()
+
+        return result
+    }
 }
