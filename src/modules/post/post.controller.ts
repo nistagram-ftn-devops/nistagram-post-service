@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Param } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, Patch } from '@nestjs/common';
 import { Post as PostEntity } from './post.entity';
 import { PostService } from './post.service';
 import { CreateCommentDto, CreatePostDto } from './post.types';
@@ -35,5 +35,10 @@ export class PostController {
     @Get('search/:keyword')
     searchPosts(@Param('keyword') keyword: string): Promise<PostEntity[]> {
         return this.postService.search(keyword)
+    }
+
+    @Patch('home')
+    getHomePostsForUser(@Body() payload: { userIds: string[] }): Promise<PostEntity[]> {
+        return this.postService.getPostsForUser(payload.userIds)
     }
 }
