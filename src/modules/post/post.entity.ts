@@ -16,6 +16,12 @@ export class Post extends BaseEntity {
     @Column()
     imageId!: number
 
+    @Column({ nullable: true })
+    authorUsername: string
+
+    @Column({ nullable: true })
+    isPublic: boolean
+
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     createdAt: Date
 

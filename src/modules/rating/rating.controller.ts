@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { DeepPartial } from 'typeorm';
 import { PostService } from '../post/post.service';
 import { Rating } from './rating.entity';
@@ -25,10 +25,10 @@ export class RatingController {
         return this.ratingService.create(post, payload)
     }
 
-    @Delete(':postId')
-    async remove(@Param('postId') postId: string) {
-        const post = await this.postService.findById(+postId)
-        const userId = 1 // TODO: change this when auth gets imeplemnted
+    @Patch()
+    async remove(@Body() payload: DeepPartial<Rating>) {
+        const post = await this.postService.findById(payload.post.id)
+        const userId = payload.userId
         this.ratingService.remove(post, userId)
     }
 }
